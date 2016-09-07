@@ -181,7 +181,25 @@ void customFunc1()
 		}
 
 		//printf("XPos: %f, YPos: %f, XVel: %f, YVel: %f\n", ball.xPos, ball.yPos, ball.xVel, ball.yVel);
+		
+		//hollow circle
 		drawCircle(ball.xPos, ball.yPos, 8, 15, CYAN);
+		
+		//filled circle
+		for (int i = 8; i > 0; i--)
+		{
+			drawCircle(ball.xPos, ball.yPos, 8, 15, CYAN);
+		}
+
+		//GLOWY circle
+		drawCircle(ball.xPos, ball.yPos, 8, 15, 0x00ffff60);
+		drawCircle(ball.xPos, ball.yPos, 7, 15, 0x00ffff90);
+		drawCircle(ball.xPos, ball.yPos, 6, 15, 0x00ffffc0);
+		drawCircle(ball.xPos, ball.yPos, 5, 15, 0xFFFFFF80);
+		drawCircle(ball.xPos, ball.yPos, 4, 15, 0xFFFFFF60);
+		drawCircle(ball.xPos, ball.yPos, 3, 15, 0xFFFFFF40);
+		drawCircle(ball.xPos, ball.yPos, 2, 15, 0xFFFFFF20);
+		drawCircle(ball.xPos, ball.yPos, 1, 15, 0xFFFFFF05);
 
 	}
 	termContext();
