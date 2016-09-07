@@ -4,7 +4,13 @@
 #include <cstdlib>	//for the randoms
 #include <ctime>	//also for the randoms
 #include <string>
+#include <vector>
+
 #include "sfwdraw.h"
+#include "Paddle.h"
+#include "Ball.h"
+#include "GameState.h"
+#include "Brick.h"
 
 using namespace sfw;
 
@@ -46,50 +52,27 @@ void origin()
 	sfw::termContext();
 }
 
-/*Draws the paddle.
-x: Origin x-coordinate
-y: Origin y-coordinate
-height: height of paddle
-width: width of paddle (goes backwards from origin x)
-*/
 
-struct Ball
+std::vector<Brick> makeBricks()
 {
-	float xPos = 400, yPos = 300;
-	float xVel = 100, yVel = 100;
+	std::vector<Brick> brickList;
+	//used as y-base
+	int yAcc = 795;
 
-	bool isXPos = true, isYPos = true;
-};
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 5; j < 590; j += 25)
+		{
+			Brick newBrick;
+			newBrick.initBrick(j, j + 10, yAcc, yAcc - 20, RED);
 
-/*Creates a random velocity within the range (in degrees) given.
-maxRange: The maximum range (in degrees) that the new velocity can be.
-canNeg: Whether or not the velocity can be negative (set to false if bouncing off floor/ceiling).
-*/
-float randVelocity(int maxRange, bool canNeg)
-{
-	float newVel;
-
-	if (!canNeg){
-		newVel = rand() % maxRange + 1;
+			brickList.push_back(newBrick);
+		}
+		yAcc += 15;
 	}
-	else {
-		//This effectively allows for a negative range.
-		newVel = rand() % (maxRange * 2) + 1;
-		newVel -= maxRange;
-	}
-	return newVel;
+
+	return brickList;
 }
-
-struct Paddle
-{
-	float xPos = 30, yPos = 400;
-	
-	//Upper and Lower collision, extends 10 px above/below paddle
-	float yPosUp = yPos + 40;
-	float yPosDown = yPos - 40;
-
-	int score = 0;
-};
 
 //Simple thingey
 void customFunc1()
@@ -105,14 +88,11 @@ void customFunc1()
 
 	setBackgroundColor(0x222222FF);
 
-	int paddleHeight = 30, paddleWidth = 3;
-
-	//x value for paddle and wall
-	float x = 30, x2 = 780;
-	float y = 0, y2 = 0;
-
 	Ball ball;
-	Paddle paddle;
+
+	GameState gs = initGameState();
+	Paddle paddle = gs.player;
+	std::vector<Brick> bricks = makeBricks();
 
 	while (stepContext())
 	{
@@ -122,17 +102,28 @@ void customFunc1()
 		paddle.yPosUp = paddle.yPos + 40;
 		paddle.yPosDown = paddle.yPos - 40;
 
-		//drawPaddle(x, y, 30, 3);  //THE FUNCTION DOESN'T WANT TO WORK ADSA.
+		//paddle.drawPaddle();  //THE FUNCTION DOESN'T WANT TO WORK.
 		drawLine(paddle.xPos, paddle.yPos + 30, paddle.xPos, paddle.yPos - 30, BLUE);  
 		drawLine(paddle.xPos - 1, paddle.yPos + 30, paddle.xPos - 1, paddle.yPos - 30, BLUE);
 		drawLine(paddle.xPos - 2, paddle.yPos + 30, paddle.xPos - 2, paddle.yPos - 30, BLUE);
 
-		//Opposite wall
-		//drawLine(780, 0, 780, 800, RED);
+		//THIS WON'T WORK EITHER.
+		/*for (int i = paddle.width; i < 0; i++)
+		{
+			drawLine(paddle.xPos, paddle.yPos + paddle.height, paddle.xPos, paddle.yPos - paddle.height, BLUE);
+		}*/
 		
 		drawString(d, std::to_string(paddle.score).c_str(), 50, 600, 16, 16, 0, '\0', WHITE);
 
-		
+		//for (int i = 0; i < bricks.size(); i++)
+		//{
+		//	//Shortcut variable
+		//	Brick r = bricks[i];
+		//	for (int j = r.x1; j < r.x2; j++)
+		//	{
+		//		drawLine(j, r.y1 + (j-r.x1), )
+		//	}
+		//}
 
 		//Middle line
 		/*for (int i = 600; i > 0; i -= 40)
@@ -142,17 +133,18 @@ void customFunc1()
 		}*/
 
 		//X-movement
-		ball.isXPos ? ball.xPos += getDeltaTime()*ball.xVel : ball.xPos -= getDeltaTime()*ball.xVel;
+		
+	ball.isXPos ? ball.xPos += getDeltaTime()*ball.xVel : ball.xPos -= getDeltaTime()*ball.xVel;
 		
 		//X-collision with wall
 		if (ball.xPos >= 800) {
 			ball.isXPos = false;
-			ball.yVel = randVelocity(180, true);
+			ball.randVelocity(ball.yVel, 180, true);
 		}
 		//X-collision with paddle
 		if (ball.xPos <= paddle.xPos + 5 && paddle.xPos > 10 && (ball.yPos <= paddle.yPos+40 && ball.yPos >= paddle.yPos - 40)) {
 			ball.isXPos = true;
-			ball.yVel = randVelocity(80, true);
+			ball.randVelocity(ball.yVel, 80, true);
 			std::cout << "Score: " << ++paddle.score << std::endl;
 			ball.xVel += 25;
 			
@@ -164,7 +156,7 @@ void customFunc1()
 			ball.yPos = 300;
 			ball.xVel = 100;
 			ball.isXPos = true;
-			ball.yVel = randVelocity(180, true);
+			ball.randVelocity(ball.yVel, 180, true);
 			paddle.score = 0;
 		}
 
@@ -173,33 +165,45 @@ void customFunc1()
 
 		if (ball.yPos >= 600) {
 			ball.isYPos = false;
-			ball.yVel = randVelocity(90, false);
+			ball.randVelocity(ball.yVel, 90, false);
 		}
 		if (ball.yPos <= 0) {
 			ball.isYPos = true;
-			ball.yVel = randVelocity(90, false);
+			ball.randVelocity(ball.yVel, 90, false);
 		}
 
 		//printf("XPos: %f, YPos: %f, XVel: %f, YVel: %f\n", ball.xPos, ball.yPos, ball.xVel, ball.yVel);
 		
 		//hollow circle
-		drawCircle(ball.xPos, ball.yPos, 8, 15, CYAN);
+		//drawCircle(ball.xPos, ball.yPos, 8, 15, CYAN);
 		
 		//filled circle
-		for (int i = 8; i > 0; i--)
+		/*for (int i = 8; i > 0; i--)
 		{
 			drawCircle(ball.xPos, ball.yPos, 8, 15, CYAN);
-		}
+		}*/
 
 		//GLOWY circle
-		drawCircle(ball.xPos, ball.yPos, 8, 15, 0x00ffff60);
-		drawCircle(ball.xPos, ball.yPos, 7, 15, 0x00ffff90);
+		drawCircle(ball.xPos, ball.yPos, 9, 15, 0x00ffff20);
+		drawCircle(ball.xPos, ball.yPos, 8, 15, 0x00ffff50);
+		drawCircle(ball.xPos, ball.yPos, 7, 15, 0x00ffff80);
 		drawCircle(ball.xPos, ball.yPos, 6, 15, 0x00ffffc0);
 		drawCircle(ball.xPos, ball.yPos, 5, 15, 0xFFFFFF80);
 		drawCircle(ball.xPos, ball.yPos, 4, 15, 0xFFFFFF60);
 		drawCircle(ball.xPos, ball.yPos, 3, 15, 0xFFFFFF40);
 		drawCircle(ball.xPos, ball.yPos, 2, 15, 0xFFFFFF20);
 		drawCircle(ball.xPos, ball.yPos, 1, 15, 0xFFFFFF05);
+
+		//BIG glowy circle
+		/*drawCircle(ball.xPos, ball.yPos, 11, 15, 0x00ffff20);
+		drawCircle(ball.xPos, ball.yPos, 10, 15, 0x00ffff50);
+		drawCircle(ball.xPos, ball.yPos, 9, 15, 0x00ffff80);
+		drawCircle(ball.xPos, ball.yPos, 8, 15, 0x00ffffc0);
+		drawCircle(ball.xPos, ball.yPos, 7, 15, 0xFFFFFF80);
+		drawCircle(ball.xPos, ball.yPos, 6, 15, 0xFFFFFF60);
+		drawCircle(ball.xPos, ball.yPos, 5, 15, 0xFFFFFF40);
+		drawCircle(ball.xPos, ball.yPos, 4, 15, 0xFFFFFF20);
+		drawCircle(ball.xPos, ball.yPos, 3, 15, 0xFFFFFF05);*/
 
 	}
 	termContext();
