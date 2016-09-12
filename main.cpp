@@ -46,9 +46,6 @@ void origin()
 	sfw::termContext();
 }
 
-
-
-
 //Simple thingey, REALLY messy.  Delete soon.
 void customFunc1()
 {
