@@ -1,31 +1,95 @@
 #include "Paddle.h"
 #include "sfwdraw.h"
+#include <iostream>
 
 using namespace sfw;
 
-void Paddle::drawPaddle(float height, unsigned int color)
+Paddle::Paddle()
+{
+}
+
+Paddle::~Paddle()
+{
+}
+
+void Paddle::initPaddle(float inXPos, float inHeight, float inWidth)
+{
+	xPos = inXPos;
+	height = inHeight;
+	width = inWidth;
+}
+
+void Paddle::drawPaddle(unsigned int color)
 {
 	//For-loop didn't want to work, sticking with statick width of 3
-	drawLine(xPos, yPos + height, xPos, yPos - height, color);
-	drawLine(xPos - 1, yPos + height, xPos - 1, yPos - height, color);
-	drawLine(xPos - 2, yPos + height, xPos - 2, yPos - height, color);
+	drawLine(xPos, yPosUp, xPos, yPosDown, color);
+	drawLine(xPos - 1, yPosUp, xPos - 1, yPosDown, color);
+	drawLine(xPos - 2, yPosUp, xPos - 2, yPosDown, color);
 }
 
 void Paddle::updatePaddle()
 {
 	yPos = getMouseY();
-	yPosUp = yPos + 40;
-	yPosDown = yPos - 40;
+	yPosUp = yPos + height;
+	yPosDown = yPos - height;
 }
 
-Paddle initPaddle(float inXPos, float inHeight, float inWidth)
+float Paddle::getXPos() const
 {
-	Paddle newPaddle;
+	return xPos;
+}
 
-	newPaddle.xPos = inXPos;
+void Paddle::setXPos(float num)
+{
+	xPos = num;
+}
 
-	newPaddle.height = inHeight;
-	newPaddle.width = inWidth;
+float Paddle::getYPos() const
+{
+	return yPos;
+}
 
-	return newPaddle;
+void Paddle::setYPos(float num)
+{
+	yPos = num;
+}
+
+float Paddle::getYPosUp() const
+{
+	return yPosUp;
+}
+
+float Paddle::getYPosDown() const
+{
+	return yPosDown;
+}
+
+float Paddle::getScore() const
+{
+	return score;
+}
+
+void Paddle::setScore(float num)
+{
+	score = num;
+}
+
+float Paddle::getWidth() const
+{
+	return width;
+}
+
+void Paddle::setWidth(float num)
+{
+	width = num;
+}
+
+float Paddle::getHeight() const
+{
+	return height;
+}
+
+void Paddle::setHeight(float num)
+{
+	height = num;
 }

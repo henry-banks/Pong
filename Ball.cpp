@@ -5,15 +5,25 @@
 
 using namespace sfw;
 
-Ball initBall()
+
+Ball::Ball()
 {
-	Ball ball;
+	initBall();
+}
 
-	ball.xPos = 400, ball.yPos = 300;
-	ball.xVel = 100, ball.yVel = 100;
+Ball::~Ball()
+{
+}
 
-	ball.isXPos = true, ball.isYPos = true;
-	return ball;
+void Ball::initBall()
+{
+	setXPos(400);
+	setYPos(300);
+	setXVel(100);
+	setYVel(100);
+
+	setIsXPos(true);
+	setIsYPos(true);
 }
 
 void Ball::updateBall(Paddle& paddle, float x, float y)
@@ -27,8 +37,8 @@ void Ball::updateBall(Paddle& paddle, float x, float y)
 		randVelocity(yVel, 180, true);
 	}
 
-	//X-collision with paddle
-	if (xPos <= paddle.xPos + 5 && paddle.xPos > 10 && (yPos <= paddle.yPos + 40 && yPos >= paddle.yPos - 40)) {
+	//X-collision with paddle.  Paddle collision extended 10 pixels above actual paddle
+	if (xPos <= paddle.getXPos()+5 && xPos > 10 && (yPos <= paddle.getYPosUp() + 10 && yPos >= paddle.getYPosDown() + 10)) {
 		isXPos = true;
 		randVelocity(yVel, 80, true);
 		std::cout << "Score: " << ++paddle.score << std::endl;
@@ -42,6 +52,10 @@ void Ball::updateBall(Paddle& paddle, float x, float y)
 		xVel = 100;
 		isXPos = true;
 		randVelocity(yVel, 180, true);
+		if (paddle.score >= 100) {
+			//After 101 it glitches through the paddle, so I'm setting 100 to a 'win'.
+			printf("\nYou win!\n");
+		}
 		paddle.score = 0;
 	}
 
@@ -101,4 +115,64 @@ void Ball::randVelocity(float& inVel, int maxRange, bool canNeg)
 		inVel = rand() % (maxRange * 2) + 1;
 		inVel -= maxRange;
 	}
+}
+
+float Ball::getXPos() const
+{
+	return xPos;
+}
+
+void Ball::setXPos(float num)
+{
+	xPos = num;
+}
+
+float Ball::getYPos() const
+{
+	return yPos;
+}
+
+void Ball::setYPos(float num)
+{
+	yPos = num;
+}
+
+float Ball::getXVel() const
+{
+	return xVel;
+}
+
+void Ball::setXVel(float num)
+{
+	xVel = num;
+}
+
+float Ball::getYVel() const
+{
+	return yVel;
+}
+
+void Ball::setYVel(float num)
+{
+	yVel = num;
+}
+
+bool Ball::getIsXPos() const
+{
+	return isXPos;
+}
+
+void Ball::setIsXPos(bool in)
+{
+	isXPos = in;
+}
+
+bool Ball::getIsYPos() const
+{
+	return isYPos;
+}
+
+void Ball::setIsYPos(bool in)
+{
+	isYPos = in;
 }

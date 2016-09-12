@@ -1,11 +1,18 @@
 #pragma once
 #include "Paddle.h"
-struct Ball
+class Ball
 {
+
 	float xPos = 400, yPos = 300;
 	float xVel = 100, yVel = 100;
 
 	bool isXPos = true, isYPos = true;
+
+public:
+
+	Ball();
+	~Ball();
+	void initBall();
 
 	/*Checks to see if ball has collided with a corner
 	Paddle: The player's paddle.  Used to see if the ball has hit the paddle
@@ -28,6 +35,23 @@ struct Ball
 	canNeg: Whether or not the velocity can be negative (set to false if bouncing off floor/ceiling).
 	*/
 	void randVelocity(float& inVel, int maxRange, bool canNeg);
+
+	float getXPos() const;
+	void setXPos(float num);
+
+	float getYPos() const;
+	void setYPos(float num);
+
+	float getXVel() const;
+	void setXVel(float num);
+
+	float getYVel() const;
+	void setYVel(float num);
+
+	bool getIsXPos() const;
+	void setIsXPos(bool in);
+
+	bool getIsYPos() const;
+	void setIsYPos(bool in);
 };
 
-Ball initBall();

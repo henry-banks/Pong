@@ -1,23 +1,61 @@
 #include "GameState.h"
 #include "sfwdraw.h"
 
-GameState initGameState()
-{
-	GameState newState;
-	newState.player = initPaddle(30, 30, 3);
-	newState.ball = initBall();
 
-	return newState;
+void GameState::initGameState()
+{
+	player.initPaddle(30, 30, 3);
+	ball.initBall();
 }
 
-void updateGameState(GameState& gs)
+void GameState::updateGameState()
 {
-	gs.player.updatePaddle();
-	gs.ball.updateBall(gs.player, 800, 600);
+	player.updatePaddle();
+	ball.updateBall(player, 800, 600);
 }
 
-void drawGameState(GameState& gs)
+void GameState::drawGameState()
 {
-	gs.player.drawPaddle(30, BLUE);
-	gs.ball.drawBall(2, CYAN);
+	player.drawPaddle(BLUE);
+	ball.drawBall(2, CYAN);
+}
+
+Paddle GameState::getPaddle() const
+{
+	return player;
+}
+
+Ball GameState::getBall() const
+{
+	return ball;
+}
+
+float GameState::getTopBound() const
+{
+	return topBound;
+}
+
+void GameState::setTopBound(float num)
+{
+	topBound = num;
+}
+
+float GameState::getBottomBound() const
+{
+	return bottomBound;
+}
+
+void GameState::setBottomBound(float num)
+{
+	bottomBound = num;
+}
+
+int GameState::getScore() const
+{
+	return score;
+}
+
+void GameState::setScore(int num)
+{
+	score = num;
 }
