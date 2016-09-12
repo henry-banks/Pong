@@ -11,8 +11,11 @@ struct Paddle
 	int width = 1;
 	int height = 30;
 
-	/*Draws the given paddle*/
-	void drawPaddle();
+	/*Draws the paddle*/
+	void drawPaddle(float height, unsigned int color);
+
+	//Updates the paddle
+	void updatePaddle();
 
 };
 

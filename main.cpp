@@ -1,16 +1,10 @@
 #include <iostream>	//just because ;D
-#include <stdio.h>
-#include <stdlib.h>
-#include <cstdlib>	//for the randoms
-#include <ctime>	//also for the randoms
+#include <ctime>	//for the randoms
 #include <string>
 #include <vector>
 
 #include "sfwdraw.h"
-#include "Paddle.h"
-#include "Ball.h"
 #include "GameState.h"
-#include "Brick.h"
 
 using namespace sfw;
 
@@ -53,28 +47,9 @@ void origin()
 }
 
 
-std::vector<Brick> makeBricks()
-{
-	std::vector<Brick> brickList;
-	//used as y-base
-	int yAcc = 795;
 
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 5; j < 590; j += 25)
-		{
-			Brick newBrick;
-			newBrick.initBrick(j, j + 10, yAcc, yAcc - 20, RED);
 
-			brickList.push_back(newBrick);
-		}
-		yAcc += 15;
-	}
-
-	return brickList;
-}
-
-//Simple thingey
+//Simple thingey, REALLY messy.  Delete soon.
 void customFunc1()
 {
 	//THE FOLLOWING IS A HORRIBLE MESS.  BEWARE.
@@ -92,7 +67,6 @@ void customFunc1()
 
 	GameState gs = initGameState();
 	Paddle paddle = gs.player;
-	std::vector<Brick> bricks = makeBricks();
 
 	while (stepContext())
 	{
@@ -211,5 +185,22 @@ void customFunc1()
 
 void main()
 {
-	customFunc1();
+	//Seed the randoms
+		srand(time(0));
+
+	initContext(800, 600, "The Worst Thing Ever Made");
+	unsigned d = loadTextureMap("./res/fontmap.png", 16, 16);
+	setBackgroundColor(0x222222FF);
+
+	GameState gs = initGameState();
+
+	while (stepContext())
+	{
+		updateGameState(gs);
+		drawGameState(gs);
+
+		//Update the score
+		drawString(d, std::to_string(gs.player.score).c_str(), 50, 600, 16, 16, 0, '\0', WHITE);
+	}
+	termContext();
 }

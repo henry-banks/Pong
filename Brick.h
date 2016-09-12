@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 class Brick
 {
 public:
@@ -19,3 +20,4 @@ public:
 
 };
 
+std::vector<Brick> makeBricks();
