@@ -8,6 +8,7 @@ class Paddle
 	float yPosUp;
 	float yPosDown;
 
+	int highScore;
 	
 	int width;
 	int height;
@@ -50,4 +51,8 @@ public:
 
 	float getHeight() const;
 	void setHeight(float num);
+	
+	//Call this when the ball goes out of the window.
+	void resetScore();
+	int getHighScore() const;
 };

@@ -1,0 +1,13 @@
+#pragma once
+
+enum EState
+{
+	ENTER_SPLASH,
+	SPLASH,
+	MAIN,
+	ENTER_PAUSE,
+	PAUSE,
+	ENTER_END,
+	END,
+	TERMINATE
+};

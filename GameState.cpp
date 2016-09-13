@@ -27,6 +27,10 @@ void GameState::updateGameState()
 		spawnParticles(ball);
 		ball.spawnParticles = false;
 	}
+
+	if (ball.loseGame) {
+		player.resetScore();
+	}
 }
 
 void GameState::drawGameState()
@@ -87,4 +91,14 @@ int GameState::getScore() const
 void GameState::setScore(int num)
 {
 	score = num;
+}
+
+EState GameState::next()
+{
+	if (ball.loseGame) {
+		ball.loseGame = false;
+		return ENTER_PAUSE;
+	}
+
+	return MAIN;
 }

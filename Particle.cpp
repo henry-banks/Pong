@@ -37,7 +37,7 @@ void Particle::resetParticle(float inX, float inY, int inLife)
 	xVel = randVelocity(90, true);
 	yVel = randVelocity(90, true);
 
-	lifetime = inLife;
+	lifetime = rand() % inLife + 1; //Life will be anywhere between 1 and 1 + inLife
 	startTime = sfw::getTime();
 
 	isActive = true;

@@ -2,6 +2,7 @@
 #include "Paddle.h"
 #include "Ball.h"
 #include "Particle.h"
+#include "constdecl.h"
 #include <vector>
 
 class GameState
@@ -38,4 +39,6 @@ public:
 
 	int getScore() const;
 	void setScore(int num);
+
+	EState next();
 };

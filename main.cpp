@@ -5,6 +5,10 @@
 
 #include "sfwdraw.h"
 #include "GameState.h"
+#include "SplashState.h"
+#include "EndState.h"
+#include "PauseState.h"
+#include "constdecl.h"
 
 using namespace sfw;
 
@@ -57,15 +61,60 @@ void main()
 	setBackgroundColor(0x222222FF);
 
 	GameState gs;
+	SplashState splash;
+	EndState end;
+	PauseState pause;
+	EState state =	ENTER_SPLASH;
+
+	splash.init(d);
+	end.init(d);
+	pause.init(d);
 	gs.initGameState();
 
-	while (stepContext())
-	{
-		gs.updateGameState();
-		gs.drawGameState();
+	bool isExit = false;
 
-		//Update the score
-		drawString(d, std::to_string(gs.getPaddle().score).c_str(), 50, 600, 16, 16, 0, '\0', WHITE);
+	while (stepContext() && !isExit)
+	{
+
+		switch (state)
+		{
+		case ENTER_SPLASH:
+			splash.play(); //Move on immediately
+		case SPLASH:
+			splash.tick();
+			splash.draw();
+			state = splash.next();
+			break;
+
+		case MAIN:
+			gs.updateGameState();
+			gs.drawGameState();
+			//Update the score
+			drawString(d, std::to_string(gs.getPaddle().score).c_str(), 50, 600, 16, 16, 0, '\0', WHITE);
+			state = gs.next();
+			break;
+
+		case ENTER_PAUSE:
+			pause.play();
+		case PAUSE:
+			pause.tick();
+			pause.draw();
+			state = pause.next();
+			break;
+
+		case ENTER_END:
+			end.play(gs.getPaddle().getHighScore());
+		case END:
+			end.tick();
+			end.draw();
+			state = end.next();
+			break;
+		case TERMINATE:
+			isExit = true;
+			break;
+		}
+
+		
 	}
 	termContext();
 }

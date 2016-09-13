@@ -18,7 +18,10 @@ public:
 	void initBall();
 	void initBall(float inX, float inY, float inXVel, float inYVel, int inRadius, bool inIsX, bool inIsY);
 
+	//Trigger for particle spawning, set to true when ball collides with paddle.
 	bool spawnParticles = false;
+	//Trigger for game loss, set to true when ball leaves window.
+	bool loseGame = false;
 
 	/*Checks to see if ball has collided with a corner
 	Paddle: The player's paddle.  Used to see if the ball has hit the paddle

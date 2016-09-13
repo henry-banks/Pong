@@ -14,6 +14,9 @@ Paddle::~Paddle()
 
 void Paddle::initPaddle(float inXPos, float inHeight, float inWidth)
 {
+	score = 0;
+	highScore = 0;
+
 	xPos = inXPos;
 	height = inHeight;
 	width = inWidth;
@@ -92,4 +95,17 @@ float Paddle::getHeight() const
 void Paddle::setHeight(float num)
 {
 	height = num;
+}
+
+void Paddle::resetScore()
+{
+	if (score > highScore) {
+		highScore = score;
+	}
+	score = 0;
+}
+
+int Paddle::getHighScore() const
+{
+	return highScore;
 }

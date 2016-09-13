@@ -52,8 +52,8 @@ void Ball::updateBall(Paddle& paddle, float x, float y)
 		randVelocity(yVel, 180, true);
 	}
 
-	//X-collision with paddle.  Paddle collision extended 10 pixels above actual paddle
-	if (xPos <= paddle.getXPos()+5 && xPos > 10 && (yPos <= paddle.getYPosUp() + 10 && yPos >= paddle.getYPosDown() + 10)) {
+	//X-collision with paddle.  Paddle collision extended 5 pixels beyond actual paddle
+	if (xPos <= paddle.getXPos()+5 && xPos > 5 && (yPos <= paddle.getYPosUp() + 10 && yPos >= paddle.getYPosDown()-5)) {
 		isXPos = true;
 		randVelocity(yVel, 80, true);
 		std::cout << "Score: " << ++paddle.score << std::endl;
@@ -73,7 +73,7 @@ void Ball::updateBall(Paddle& paddle, float x, float y)
 			//After 101 it glitches through the paddle, so I'm setting 100 to a 'win'.
 			printf("\nYou win!\n");
 		}
-		paddle.score = 0;
+		loseGame = true;
 	}
 
 	//Y-movement
