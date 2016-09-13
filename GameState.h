@@ -1,11 +1,14 @@
 #pragma once
 #include "Paddle.h"
 #include "Ball.h"
+#include "Particle.h"
+#include <vector>
 
 class GameState
 {
 	Paddle player;
 	Ball ball;
+	std::vector<Particle> particles;
 	float topBound, bottomBound;
 
 	int score;
@@ -24,6 +27,8 @@ public:
 
 	Paddle getPaddle() const;
 	Ball getBall() const;
+
+	void spawnParticles(Ball inBall);
 
 	float getTopBound() const;
 	void setTopBound(float num);

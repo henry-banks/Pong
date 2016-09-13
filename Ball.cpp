@@ -1,5 +1,7 @@
 #include "Ball.h"
 #include "sfwdraw.h"
+
+#include <vector>
 #include <cstdlib>
 #include <iostream>
 
@@ -26,6 +28,19 @@ void Ball::initBall()
 	setIsYPos(true);
 }
 
+void Ball::initBall(float inX, float inY, float inXVel, float inYVel, int inRadius, bool inIsX, bool inIsY)
+{
+	xPos = inX;
+	yPos = inY;
+	xVel = inXVel;
+	yVel = inYVel;
+
+	radius = inRadius;
+
+	isXPos = inIsX;
+	isYPos = inIsY;
+}
+
 void Ball::updateBall(Paddle& paddle, float x, float y)
 {
 	//X-movement
@@ -43,6 +58,8 @@ void Ball::updateBall(Paddle& paddle, float x, float y)
 		randVelocity(yVel, 80, true);
 		std::cout << "Score: " << ++paddle.score << std::endl;
 		xVel += 25;
+
+		spawnParticles = true;
 	}
 
 	//Reset ball collision
@@ -74,17 +91,31 @@ void Ball::updateBall(Paddle& paddle, float x, float y)
 	}
 }
 
+void Ball::updateBall(float x, float y)
+{
+	//X-movement
+	isXPos ? xPos += getDeltaTime()*xVel : xPos -= getDeltaTime()*xVel;
+
+	//Y-movement
+	isYPos ? yPos += getDeltaTime()*yVel : yPos -= getDeltaTime()*yVel;
+	//Y-collision with floor
+	if (yPos <= 0) {
+		isYPos = true;
+		randVelocity(yVel, 90, false);
+	}
+}
+
 void Ball::drawBall(int choice, unsigned int color)
 {
 	switch (choice)
 	{
 	case 0:
 		//Empty circle
-		drawCircle(xPos, yPos, 8, 15, color);
+		drawCircle(xPos, yPos, radius, 15, color);
 		break;
 	case 1:
 		//Filled circle
-		for (int i = 8; i > 0; i--)
+		for (int i = radius; i > 0; i--)
 		{
 			drawCircle(xPos, yPos, i, 15, color);
 		}
@@ -116,6 +147,43 @@ void Ball::randVelocity(float& inVel, int maxRange, bool canNeg)
 		inVel -= maxRange;
 	}
 }
+
+float Ball::randVelocity(int maxRange, bool canNeg)
+{
+	float inVel;
+
+	if (!canNeg) {
+		inVel = rand() % maxRange + 1;
+	}
+	else {
+		//This effectively allows for a negative range.
+		inVel = rand() % (maxRange * 2) + 1;
+		inVel -= maxRange;
+	}
+
+	return inVel;
+}
+
+//void Ball::spawnParticles(float num, int lifetime, unsigned int color)
+//{
+//	//The start of the particles' lives
+//	float startTime = sfw::getTime();
+//
+//	std::vector<Ball>particles;
+//	for (int i = 0; i < num; i++)
+//	{
+//		Ball newBall;
+//		newBall.initBall(xPos, yPos, randVelocity(100, true), randVelocity(100, false), 2, (rand()%1) == 1, (rand()%1) == 1);
+//		particles.push_back(newBall);
+//	}
+//
+//	if (getDeltaTime() - getTime() < lifetime)
+//	{
+//			Ball b = particles[0];
+//			b.updateBall(b.getXPos(), b.getYPos());
+//			b.drawBall(1, color);
+//	}
+//}
 
 float Ball::getXPos() const
 {
