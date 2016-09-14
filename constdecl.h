@@ -4,6 +4,9 @@ enum EState
 {
 	ENTER_SPLASH,
 	SPLASH,
+	ENTER_MENU,
+	MENU,
+	ABOUT,
 	MAIN,
 	ENTER_PAUSE,
 	PAUSE,

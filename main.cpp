@@ -9,6 +9,7 @@
 #include "EndState.h"
 #include "PauseState.h"
 #include "constdecl.h"
+#include "MenuState.h"
 
 using namespace sfw;
 
@@ -64,12 +65,14 @@ void main()
 	SplashState splash;
 	EndState end;
 	PauseState pause;
+	MenuState menu;
 	EState state =	ENTER_SPLASH;
 
 	splash.init(d);
 	end.init(d);
 	pause.init(d);
 	gs.initGameState();
+	menu.init(d);
 
 	bool isExit = false;
 
@@ -84,6 +87,14 @@ void main()
 			splash.tick();
 			splash.draw();
 			state = splash.next();
+			break;
+
+		case ENTER_MENU:
+			menu.play();
+		case MENU:
+			menu.tick();
+			menu.draw();
+			state = menu.next();
 			break;
 
 		case MAIN:

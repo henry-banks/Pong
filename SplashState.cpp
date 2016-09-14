@@ -35,7 +35,7 @@ void SplashState::tick()
 EState SplashState::next() const
 {
 	if (timer < 0) {
-		return MAIN;
+		return ENTER_MENU;
 	}
 
 	return SPLASH;
