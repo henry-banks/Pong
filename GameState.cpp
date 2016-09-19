@@ -1,11 +1,17 @@
 #include "GameState.h"
 #include "sfwdraw.h"
+#include <string>
 
+using namespace sfw;
 
-void GameState::initGameState()
+void GameState::initGameState(int inFont, int inBallTex)
 {
+	font = inFont;
+	ballTex = inBallTex;
+	round = 0;
+
 	player.initPaddle(30, 30, 3);
-	ball.initBall();
+	ball.initBall(inBallTex);
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -33,6 +39,11 @@ void GameState::updateGameState()
 	}
 }
 
+void GameState::playGameState()
+{
+	round++;
+}
+
 void GameState::drawGameState()
 {
 	player.drawPaddle(BLUE);
@@ -43,6 +54,8 @@ void GameState::drawGameState()
 			particles[i].drawParticle(YELLOW);
 		}
 	}
+
+	drawString(font, std::to_string(player.score).c_str(), 50, 600, 16, 16, 0, '\0', WHITE);
 }
 
 Paddle GameState::getPaddle() const
@@ -93,11 +106,16 @@ void GameState::setScore(int num)
 	score = num;
 }
 
+int GameState::getRound() const
+{
+	return round;
+}
+
 EState GameState::next()
 {
 	if (ball.loseGame) {
 		ball.loseGame = false;
-		return ENTER_PAUSE;
+		return ENTER_END;
 	}
 
 	return MAIN;

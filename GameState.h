@@ -12,16 +12,21 @@ class GameState
 	std::vector<Particle> particles;
 	float topBound, bottomBound;
 
-	int score;
+	int score, round;
+
+	int font, ballTex; //ballTex probably unnecessary
 
 public:
 
 	//Setup starting values.
-	void initGameState();
+	void initGameState(int inFont, int inBallTex);
 
 	/*Call update and collision functions.
 	Also, check for anythign that isn't part of a struct*/
 	void updateGameState();
+
+	//Called at the start of each round
+	void playGameState();
 
 	//Drawing functions (if they work...)
 	void drawGameState();
@@ -39,6 +44,8 @@ public:
 
 	int getScore() const;
 	void setScore(int num);
+
+	int getRound() const;
 
 	EState next();
 };

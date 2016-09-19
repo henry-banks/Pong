@@ -28,8 +28,22 @@ void Ball::initBall()
 	setIsYPos(true);
 }
 
-void Ball::initBall(float inX, float inY, float inXVel, float inYVel, int inRadius, bool inIsX, bool inIsY)
+void Ball::initBall(int inTex)
 {
+	ballTex = inTex;
+
+	setXPos(400);
+	setYPos(300);
+	setXVel(100);
+	setYVel(100);
+
+	setIsXPos(true);
+	setIsYPos(true);
+}
+
+void Ball::initBall(int inTex, float inX, float inY, float inXVel, float inYVel, int inRadius, bool inIsX, bool inIsY)
+{
+	ballTex = inTex;
 	xPos = inX;
 	yPos = inY;
 	xVel = inXVel;
@@ -107,6 +121,10 @@ void Ball::updateBall(float x, float y)
 
 void Ball::drawBall(int choice, unsigned int color)
 {
+	
+	drawTexture(ballTex, xPos, yPos, 20, 20, 0);
+
+	/* Math-ball
 	switch (choice)
 	{
 	case 0:
@@ -133,6 +151,7 @@ void Ball::drawBall(int choice, unsigned int color)
 		drawCircle(xPos, yPos, 1, 15, 0xFFFFFF05);
 		break;
 	}
+	*/
 }
 
 void Ball::randVelocity(float& inVel, int maxRange, bool canNeg)

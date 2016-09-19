@@ -7,6 +7,8 @@ class Ball
 	float xVel = 100, yVel = 100;
 	int radius;
 
+	int ballTex;
+
 	bool isXPos = true, isYPos = true;
 	//Used as a trigger to tell the game state to spawn particles.
 	
@@ -16,7 +18,8 @@ public:
 	Ball();
 	~Ball();
 	void initBall();
-	void initBall(float inX, float inY, float inXVel, float inYVel, int inRadius, bool inIsX, bool inIsY);
+	void initBall(int inTex);
+	void initBall(int inTex, float inX, float inY, float inXVel, float inYVel, int inRadius, bool inIsX, bool inIsY);
 
 	//Trigger for particle spawning, set to true when ball collides with paddle.
 	bool spawnParticles = false;

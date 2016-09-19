@@ -60,7 +60,8 @@ void main()
 
 	initContext(800, 600, "The Worst Thing Ever Made");
 	unsigned d = loadTextureMap("./res/fontmap.png", 16, 16);
-	unsigned u = sfw::loadTextureMap("./res/crosshair.png");
+	unsigned cursor = loadTextureMap("./res/ball.png");
+	unsigned clickedCursor = loadTextureMap("./res/ball_clicked.png");
 	setBackgroundColor(0x222222FF);
 
 	GameState gs;
@@ -72,11 +73,11 @@ void main()
 	EState state =	ENTER_SPLASH;
 
 	splash.init(d);
-	end.init(d);
+	end.init(d, cursor, clickedCursor);
 	pause.init(d);
-	gs.initGameState();
-	menu.init(d, u);
-	about.init(d);
+	gs.initGameState(d, cursor);
+	menu.init(d, cursor, clickedCursor);
+	about.init(d, cursor, clickedCursor);
 
 	bool isExit = false;
 
@@ -107,11 +108,12 @@ void main()
 			state = about.next();
 			break;
 
+		case ENTER_MAIN:
+			gs.playGameState();
 		case MAIN:
 			gs.updateGameState();
 			gs.drawGameState();
 			//Update the score
-			drawString(d, std::to_string(gs.getPaddle().score).c_str(), 50, 600, 16, 16, 0, '\0', WHITE);
 			state = gs.next();
 			break;
 
@@ -124,7 +126,7 @@ void main()
 			break;
 
 		case ENTER_END:
-			end.play(gs.getPaddle().getHighScore());
+			end.play(gs.getPaddle().getHighScore(), gs.getRound());
 		case END:
 			end.tick();
 			end.draw();

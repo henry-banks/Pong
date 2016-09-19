@@ -12,13 +12,14 @@ MenuState::~MenuState()
 {
 }
 
-void MenuState::init(int inFont, int inCursor)
+void MenuState::init(int inFont, int inCursor, int inClickedCursor)
 {
 	font = inFont;
 	cursor = inCursor;
+	clickedCursor = inClickedCursor;
 	nextState = EState::MENU;
 
-	playButton.init(font, 300, 400, 200, 50, WHITE, "Play", MAIN);
+	playButton.init(font, 300, 400, 200, 50, WHITE, "Play", ENTER_MAIN);
 	aboutButton.init(font, 300, 325, 200, 50, WHITE, "About", ABOUT);
 	quitButton.init(font, 300, 250, 200, 50, WHITE, "Quit", TERMINATE);
 }
@@ -37,29 +38,7 @@ void MenuState::draw()
 	aboutButton.draw();
 	quitButton.draw();
 
-	//"cursor"
-	if (sfw::getMouseButton(MOUSE_BUTTON_LEFT)) {
-		drawCircle(getMouseX(), getMouseY(), 9, 15, 0x00ffff50);
-		drawCircle(getMouseX(), getMouseY(), 8, 15, 0x00ffff80);
-		drawCircle(getMouseX(), getMouseY(), 7, 15, 0x00ffffc0);
-		drawCircle(getMouseX(), getMouseY(), 6, 15, 0x00fffff0);
-		drawCircle(getMouseX(), getMouseY(), 5, 15, 0xFFFFFFc0);
-		drawCircle(getMouseX(), getMouseY(), 4, 15, 0xFFFFFF80);
-		drawCircle(getMouseX(), getMouseY(), 3, 15, 0xFFFFFF60);
-		drawCircle(getMouseX(), getMouseY(), 2, 15, 0xFFFFFF40);
-		drawCircle(getMouseX(), getMouseY(), 1, 15, 0xFFFFFF25);
-	}
-	else {
-		drawCircle(getMouseX(), getMouseY(), 9, 15, 0x00ffff20);
-		drawCircle(getMouseX(), getMouseY(), 8, 15, 0x00ffff50);
-		drawCircle(getMouseX(), getMouseY(), 7, 15, 0x00ffff80);
-		drawCircle(getMouseX(), getMouseY(), 6, 15, 0x00ffffc0);
-		drawCircle(getMouseX(), getMouseY(), 5, 15, 0xFFFFFF80);
-		drawCircle(getMouseX(), getMouseY(), 4, 15, 0xFFFFFF60);
-		drawCircle(getMouseX(), getMouseY(), 3, 15, 0xFFFFFF40);
-		drawCircle(getMouseX(), getMouseY(), 2, 15, 0xFFFFFF20);
-		drawCircle(getMouseX(), getMouseY(), 1, 15, 0xFFFFFF05);
-	}
+	cursorDraw::drawCursor(cursor, clickedCursor);
 }
 
 void MenuState::tick()

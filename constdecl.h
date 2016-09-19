@@ -7,6 +7,7 @@ enum EState
 	ENTER_MENU,
 	MENU,
 	ABOUT,
+	ENTER_MAIN,
 	MAIN,
 	ENTER_PAUSE,
 	PAUSE,

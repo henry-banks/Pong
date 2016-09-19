@@ -18,13 +18,13 @@ void SplashState::init(int inFont)
 
 void SplashState::play()
 {
-	timer = 2.f;
+	timer = 1.f;
 }
 
 void SplashState::draw()
 {
-	sfw::drawString(font, "Wait a Bit...", 100, 100, 20, 20);
-	sfw::drawLine(100, 70, 100 + 500 * timer / 3.f, 70);
+	sfw::drawString(font, "Hold on I'm loading...", 100, 100, 20, 20);
+	sfw::drawLine(100, 70, 100 + 500 * timer, 70);
 }
 
 void SplashState::tick()

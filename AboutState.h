@@ -6,12 +6,13 @@
 class AboutState
 {
 	int font;
+	int cursor, clickedCursor;
 	MenuButton backButton;
 public:
 	AboutState();
 	~AboutState();
 	//Startup
-	void init(int inFont);
+	void init(int inFont, int inCursor, int inClickedCursor);
 	//Activation
 	void play();
 
