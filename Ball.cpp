@@ -73,6 +73,9 @@ void Ball::updateBall(Paddle& paddle, float x, float y)
 		std::cout << "Score: " << ++paddle.score << std::endl;
 		xVel += 25;
 
+		//This (probably) fixes a bug where the ball would collide with the paddle multiple times if it bounced off the very tip.
+		xPos = paddle.getXPos() + 5;
+
 		spawnParticles = true;
 	}
 
