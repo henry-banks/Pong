@@ -33,7 +33,7 @@ void MenuButton::draw()
 	drawLine(x1, y1, x1, y2);
 	drawLine(x2, y1, x2, y2);
 
-	drawString(font, text.c_str(), x1 + 2, y2/2, 12);
+	drawString(font, text.c_str(), ((x1 + x2)/2) - (text.size() * 10) , y1-15, 20, 20, 0, '\0');
 }
 
 void MenuButton::tick()
@@ -46,8 +46,5 @@ void MenuButton::tick()
 
 EState MenuButton::next() const
 {
-	if (isClicked) {
-		return nextState;
-	}
-	return EState::MENU;
+	return nextState;
 }

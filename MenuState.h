@@ -10,13 +10,14 @@ class MenuState
 
 public:
 	int font;
+	int cursor;
 	EState nextState;
 
 	MenuState();
 	~MenuState();
 
 	//Startup
-	void init(int inFont);
+	void init(int inFont, int inCursor);
 	//Activation
 	void play();
 
@@ -24,6 +25,6 @@ public:
 	void draw();
 	void tick();
 
-	EState next() const;
+	EState next();
 };
 

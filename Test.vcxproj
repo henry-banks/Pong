@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AboutState.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="EndState.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="SplashState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AboutState.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="constdecl.h" />
     <ClInclude Include="EndState.h" />

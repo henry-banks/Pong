@@ -10,6 +10,7 @@
 #include "PauseState.h"
 #include "constdecl.h"
 #include "MenuState.h"
+#include "AboutState.h"
 
 using namespace sfw;
 
@@ -59,6 +60,7 @@ void main()
 
 	initContext(800, 600, "The Worst Thing Ever Made");
 	unsigned d = loadTextureMap("./res/fontmap.png", 16, 16);
+	unsigned u = sfw::loadTextureMap("./res/crosshair.png");
 	setBackgroundColor(0x222222FF);
 
 	GameState gs;
@@ -66,13 +68,15 @@ void main()
 	EndState end;
 	PauseState pause;
 	MenuState menu;
+	AboutState about;
 	EState state =	ENTER_SPLASH;
 
 	splash.init(d);
 	end.init(d);
 	pause.init(d);
 	gs.initGameState();
-	menu.init(d);
+	menu.init(d, u);
+	about.init(d);
 
 	bool isExit = false;
 
@@ -95,6 +99,12 @@ void main()
 			menu.tick();
 			menu.draw();
 			state = menu.next();
+			break;
+
+		case ABOUT:
+			about.tick();
+			about.draw();
+			state = about.next();
 			break;
 
 		case MAIN:

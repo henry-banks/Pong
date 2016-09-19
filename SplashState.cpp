@@ -18,7 +18,7 @@ void SplashState::init(int inFont)
 
 void SplashState::play()
 {
-	timer = 3.f;
+	timer = 2.f;
 }
 
 void SplashState::draw()
