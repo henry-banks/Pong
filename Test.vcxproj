@@ -126,11 +126,16 @@
   <ItemGroup>
     <ClCompile Include="AboutState.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonRowButton.cpp" />
+    <ClCompile Include="ColorButton.cpp" />
     <ClCompile Include="EndState.cpp" />
+    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="OptionState.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PauseState.cpp" />
@@ -139,11 +144,16 @@
   <ItemGroup>
     <ClInclude Include="AboutState.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonRowButton.h" />
+    <ClInclude Include="ColorButton.h" />
     <ClInclude Include="constdecl.h" />
     <ClInclude Include="EndState.h" />
+    <ClInclude Include="GameData.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="OptionState.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="PauseState.h" />

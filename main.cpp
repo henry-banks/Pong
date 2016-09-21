@@ -11,6 +11,8 @@
 #include "constdecl.h"
 #include "MenuState.h"
 #include "AboutState.h"
+#include "OptionState.h"
+#include "GameData.h"
 
 using namespace sfw;
 
@@ -58,7 +60,77 @@ void main()
 	//Seed the randoms
 		srand(time(0));
 
-	initContext(800, 600, "The Worst Thing Ever Made");
+	//I'm stealing this idea from Trevor.  Sorry Trevor.
+	int nameRand = rand() % 20;
+	
+	//Choose a random window name
+	switch (nameRand)
+	{
+	case 0:
+		initContext(800, 600, "The Worst Thing Ever Made");
+		break;
+	case 1:
+		initContext(800, 600, "Pong for Lonely People");
+		break;
+	case 2:
+		initContext(800, 600, "GIT GUD");
+		break;
+	case 3:
+		initContext(800, 600, "i snort smarties");
+		break;
+	case 4:
+		initContext(800, 600, "WAAAAAAGH");
+		break;
+	case 5:
+		initContext(800, 600, "Holla Holla Get Dolla");
+		break;
+	case 6:
+		initContext(800, 600, "Never Gonna Give You Up");
+		break;
+	case 7:
+		initContext(800, 600, "Never Gonna Let You Down");
+		break;
+	case 8:
+		initContext(800, 600, "Half-Life 3");
+		break;
+	case 9:
+		initContext(800, 600, "i main bastion");
+		break;
+	case 10:
+		initContext(800, 600, "heyyeyaaeyaaaeyaeyaa");
+		break;
+	case 11:
+		initContext(800, 600, "THERE CAN BE ONLY ONE");
+		break;
+	case 12:
+		initContext(800, 600, "pootis");
+		break;
+	case 13:
+		initContext(800, 600, "just............................DO IT");
+		break;
+	case 14:
+		initContext(800, 600, "Don't Let Your Dreams Stay Dreams");
+		break;
+	case 15:
+		initContext(800, 600, "Winter is Coming");
+		break;
+	case 16:
+		initContext(800, 600, "BLOOD FOR THE BLOOD GOD");
+		break;
+	case 17:
+		initContext(800, 600, "SKULLS FOR THE SKULL THRONE");
+		break;
+	case 18:
+		initContext(800, 600, "i'M bATMAN");
+		break;
+	case 19:
+		initContext(800, 600, "The Ride Never Ends");
+		break;
+	default:
+		initContext(800, 600, "a winrar is u");
+		break;
+	}
+
 	unsigned d = loadTextureMap("./res/fontmap.png", 16, 16);
 	unsigned cursor = loadTextureMap("./res/ball.png");
 	unsigned clickedCursor = loadTextureMap("./res/ball_clicked.png");
@@ -70,6 +142,8 @@ void main()
 	PauseState pause;
 	MenuState menu;
 	AboutState about;
+	OptionState option;
+	GameData data;
 	EState state =	ENTER_SPLASH;
 
 	splash.init(d);
@@ -78,6 +152,7 @@ void main()
 	gs.initGameState(d, cursor);
 	menu.init(d, cursor, clickedCursor);
 	about.init(d, cursor, clickedCursor);
+	option.init(d, cursor, clickedCursor, &data);
 
 	bool isExit = false;
 
@@ -106,6 +181,12 @@ void main()
 			about.tick();
 			about.draw();
 			state = about.next();
+			break;
+
+		case OPTION:
+			option.tick();
+			option.draw();
+			state = option.next();
 			break;
 
 		case ENTER_MAIN:

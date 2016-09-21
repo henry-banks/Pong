@@ -14,8 +14,10 @@ public:
 	Particle();
 	~Particle();
 
+	//Base reset, for paddle particles
 	void resetParticle(float inX, float inY, int inLife);
 
+	/*Paddle collision*/
 	void updateParticle();
 	void drawParticle(unsigned int color);
 

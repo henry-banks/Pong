@@ -43,6 +43,7 @@ void Particle::resetParticle(float inX, float inY, int inLife)
 	isActive = true;
 }
 
+
 void Particle::updateParticle()
 {
 	if (sfw::getTime() - startTime > lifetime) {

@@ -20,8 +20,9 @@ void MenuState::init(int inFont, int inCursor, int inClickedCursor)
 	nextState = EState::MENU;
 
 	playButton.init(font, 300, 400, 200, 50, WHITE, "Play", ENTER_MAIN);
-	aboutButton.init(font, 300, 325, 200, 50, WHITE, "About", ABOUT);
-	quitButton.init(font, 300, 250, 200, 50, WHITE, "Quit", TERMINATE);
+	optionButton.init(font, 300, 325, 200, 50, WHITE, "Options", OPTION);
+	aboutButton.init(font, 300, 250, 200, 50, WHITE, "About", ABOUT);
+	quitButton.init(font, 300, 175, 200, 50, WHITE, "Quit", TERMINATE);
 }
 
 void MenuState::play()
@@ -35,6 +36,7 @@ void MenuState::draw()
 	drawString(font, "PONG FOR LONELY PEOPLE", 75, 550, 30, 30, 0, '\0');
 
 	playButton.draw();
+	optionButton.draw();
 	aboutButton.draw();
 	quitButton.draw();
 
@@ -44,6 +46,7 @@ void MenuState::draw()
 void MenuState::tick()
 {
 	playButton.tick();
+	optionButton.tick();
 	aboutButton.tick();
 	quitButton.tick();
 }
@@ -53,6 +56,10 @@ EState MenuState::next()
 	if (playButton.isClicked) {
 		playButton.isClicked = false;
 		return playButton.next();
+	}
+	else if (optionButton.isClicked) {
+		optionButton.isClicked = false;
+		return optionButton.next();
 	}
 	else if (aboutButton.isClicked) {
 		aboutButton.isClicked = false;

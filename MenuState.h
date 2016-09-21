@@ -5,6 +5,7 @@
 class MenuState
 {
 	MenuButton playButton;
+	MenuButton optionButton;
 	MenuButton aboutButton;
 	MenuButton quitButton;
 
