@@ -216,7 +216,7 @@ void Ball::resetBall()
 void Ball::drawBall(int choice, unsigned int color)
 {
 	//Draw this first so it's 'under' the ball
-	trail.draw(CYAN);
+	trail.draw(color);
 
 	//Elegent, texture-based ball
 	drawTexture(ballTex, xPos, yPos, 20, 20, 0);

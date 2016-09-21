@@ -130,7 +130,6 @@
     <ClCompile Include="ButtonRowButton.cpp" />
     <ClCompile Include="ColorButton.cpp" />
     <ClCompile Include="EndState.cpp" />
-    <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuButton.cpp" />
@@ -149,7 +148,6 @@
     <ClInclude Include="ColorButton.h" />
     <ClInclude Include="constdecl.h" />
     <ClInclude Include="EndState.h" />
-    <ClInclude Include="GameData.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuState.h" />

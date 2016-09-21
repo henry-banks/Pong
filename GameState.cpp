@@ -4,12 +4,13 @@
 
 using namespace sfw;
 
-void GameState::initGameState(int inFont, int inBallTex)
+void GameState::initGameState(int inFont, int inBallTex, OptionState* inData)
 {
 	font = inFont;
 	ballTex = inBallTex;
 	round = 0;
 
+	data = inData;
 	player.initPaddle(30, 30, 3);
 	ball.initBall(inBallTex);
 
@@ -46,12 +47,12 @@ void GameState::playGameState()
 
 void GameState::drawGameState()
 {
-	player.drawPaddle(BLUE);
-	ball.drawBall(2, CYAN);
+	player.drawPaddle(data->getPaddleColor());
+	ball.drawBall(2, data->getTrailColor());
 	for (int i = 0; i < 5; i++)
 	{
 		if (particles[i].getActive()) {
-			particles[i].drawParticle(YELLOW);
+			particles[i].drawParticle(data->getParticleColor());
 		}
 	}
 

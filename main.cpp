@@ -12,7 +12,6 @@
 #include "MenuState.h"
 #include "AboutState.h"
 #include "OptionState.h"
-#include "GameData.h"
 
 using namespace sfw;
 
@@ -60,10 +59,9 @@ void main()
 	//Seed the randoms
 		srand(time(0));
 
-	//I'm stealing this idea from Trevor.  Sorry Trevor.
 	int nameRand = rand() % 20;
-	
-	//Choose a random window name
+
+	//Choose a random window name.  Please collapse this if it's open
 	switch (nameRand)
 	{
 	case 0:
@@ -143,21 +141,21 @@ void main()
 	MenuState menu;
 	AboutState about;
 	OptionState option;
-	GameData data;
 	EState state =	ENTER_SPLASH;
 
 	splash.init(d);
 	end.init(d, cursor, clickedCursor);
 	pause.init(d);
-	gs.initGameState(d, cursor);
+	gs.initGameState(d, cursor, &option);
 	menu.init(d, cursor, clickedCursor);
 	about.init(d, cursor, clickedCursor);
-	option.init(d, cursor, clickedCursor, &data);
+	option.init(d, cursor, clickedCursor);
 
 	bool isExit = false;
 
 	while (stepContext() && !isExit)
 	{
+		setBackgroundColor(option.getBackgroundColor());
 
 		switch (state)
 		{

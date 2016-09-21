@@ -3,6 +3,7 @@
 #include "Ball.h"
 #include "Particle.h"
 #include "constdecl.h"
+#include "OptionState.h"
 #include <vector>
 
 class GameState
@@ -12,6 +13,8 @@ class GameState
 	std::vector<Particle> particles;
 	float topBound, bottomBound;
 
+	OptionState* data;
+
 	int score, round;
 
 	int font, ballTex; //ballTex probably unnecessary
@@ -19,7 +22,7 @@ class GameState
 public:
 
 	//Setup starting values.
-	void initGameState(int inFont, int inBallTex);
+	void initGameState(int inFont, int inBallTex, OptionState* inData);
 
 	/*Call update and collision functions.
 	Also, check for anythign that isn't part of a struct*/

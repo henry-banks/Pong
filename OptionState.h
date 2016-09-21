@@ -3,7 +3,6 @@
 #include "MenuButton.h"
 #include "ColorButton.h"
 #include "ButtonRowButton.h"
-#include "GameData.h"
 
 #include <vector>
 
@@ -12,10 +11,11 @@ class OptionState
 	int font;
 	int cursor, clickedCursor;
 
-	GameData* data;
 
 	MenuButton confirmButton;
 	MenuButton cancelButton;
+	//Color buttons are the most vanilla buttons so I'm using one of those for the 'reset to deafult' button
+	ColorButton DefaultButton;
 
 	//I may want to put these in an array
 	ButtonRowButton trailButton;
@@ -23,8 +23,13 @@ class OptionState
 	ButtonRowButton particleButton;
 	ButtonRowButton backgroundButton;
 
+	std::vector<ButtonRowButton*> buttons;
+
 	//Variables to hold all these colors
 	unsigned trailColor, paddleColor, particleColor, backgroundColor;
+	//Variables to save all these colors (in case of cancel)
+	unsigned trailColor_s, paddleColor_s, particleColor_s, backgroundColor_s;
+
 	//Used for resetting color buttons
 	unsigned placeholderInt;
 
@@ -32,7 +37,7 @@ public:
 	OptionState();
 	~OptionState();
 	//Startup
-	void init(int inFont, int inCursor, int inClickedCursor, GameData* inData);
+	void init(int inFont, int inCursor, int inClickedCursor);
 	//Activation
 	void play();
 
@@ -40,9 +45,13 @@ public:
 	void draw();
 	void tick();
 
-	GameData* getData();
-
 	EState next();
+
+	//Getters
+	unsigned getTrailColor();
+	unsigned getPaddleColor();
+	unsigned getParticleColor();
+	unsigned getBackgroundColor();
 };
 
 

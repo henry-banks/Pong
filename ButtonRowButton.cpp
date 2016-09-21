@@ -11,7 +11,7 @@ ButtonRowButton::~ButtonRowButton()
 {
 }
 
-void ButtonRowButton::init(int a_font, float a_x1, float a_y1, float width, float height, int a_size, int a_color, std::string a_text)
+void ButtonRowButton::init(int a_font, float a_x1, float a_y1, float width, float height, int a_size, int a_color, std::string a_text, int a_editColor)
 {
 	font = a_font;
 	x1 = a_x1;
@@ -22,6 +22,7 @@ void ButtonRowButton::init(int a_font, float a_x1, float a_y1, float width, floa
 	text = a_text;
 
 	size = a_size;
+	editColor = a_editColor;
 
 	isActive = false;
 
@@ -58,9 +59,9 @@ void ButtonRowButton::draw()
 	drawString(font, text.c_str(), ((x1 + x2) / 2) - (text.size() * (size / 2)), ((y1 + y2) / 2) + size / 2, size, size, 0, '\0', color);
 
 	if (isActive) {
-		for (int i = 0; i < buttonList.size(); i++)
+		for (int i = 0; i < colorButtons.size(); i++)
 		{
-			buttonList[i]->draw();
+			colorButtons[i]->draw();
 		}
 	}
 }
@@ -73,9 +74,11 @@ void ButtonRowButton::tick_a()
 	}
 
 	for (ColorButton* i : colorButtons) {
+		i->tick();
 		if (i->isClicked) {
 			isClickedChild = true;
 			editColor = i->getColor();
+			i->isClicked = false;
 		}
 	}
 }
@@ -84,8 +87,8 @@ void ButtonRowButton::onClicked()
 {
 	isActive = true;
 	isClicked = true;
-	for (int i = 0; i < buttonList.size(); i++)
+	for (int i = 0; i < colorButtons.size(); i++)
 	{
-		buttonList[i]->init(font, x1 + (30 * i), y2 - 10, 25, 25, buttonList[i]->getColor(), buttonList[i]->getText());
+		colorButtons[i]->init(font, x1 + (30 * i), y2 - 10, 25, 25, colorButtons[i]->getColor(), colorButtons[i]->getText());
 	}
 }

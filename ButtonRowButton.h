@@ -6,12 +6,13 @@
 class ButtonRowButton :
 	public Button
 {
-	std::vector<ColorButton*> buttonList;
+	//I will be looping over all the color buttons later
+	std::vector<ColorButton*> colorButtons;
 
 public:
 	ButtonRowButton();
 	~ButtonRowButton();
-	void init(int a_font, float a_x1, float a_y1, float width, float height, int a_size, int a_color, std::string a_text);
+	void init(int a_font, float a_x1, float a_y1, float width, float height, int a_size, int a_color, std::string a_text, int a_editColor);
 
 	void draw();
 	void tick_a();
@@ -27,8 +28,7 @@ public:
 	ColorButton magButton;
 	ColorButton whiteButton;
 	ColorButton blackButton;
-	//I will be looping over all the color buttons later
-	std::vector<ColorButton*> colorButtons;
+	
 
 	bool isClickedChild;
 	bool isActive;

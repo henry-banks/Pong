@@ -72,9 +72,6 @@
     <ClCompile Include="ColorButton.cpp">
       <Filter>Source Files\Buttons</Filter>
     </ClCompile>
-    <ClCompile Include="GameData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Paddle.h">
@@ -121,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="ButtonRowButton.h">
       <Filter>Header Files\Buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="GameData.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

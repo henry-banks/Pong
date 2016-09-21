@@ -24,7 +24,7 @@ void Paddle::initPaddle(float inXPos, float inHeight, float inWidth)
 
 void Paddle::drawPaddle(unsigned int color)
 {
-	//For-loop didn't want to work, sticking with statick width of 3
+	//For-loop didn't want to work, sticking with static width of 3
 	drawLine(xPos, yPosUp, xPos, yPosDown, color);
 	drawLine(xPos - 1, yPosUp, xPos - 1, yPosDown, color);
 	drawLine(xPos - 2, yPosUp, xPos - 2, yPosDown, color);
